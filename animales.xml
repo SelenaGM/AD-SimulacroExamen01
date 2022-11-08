@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<animales>
+    <animal>
+        <especie>Gatito</especie>
+        <raza>Gatito chuli</raza>
+        <edad>1</edad>
+        <color>Calico</color>
+    </animal>
+    <animal>
+        <especie>Perrete</especie>
+        <raza>Golden</raza>
+        <edad>4</edad>
+        <color>canela</color>
+    </animal>
+</animales>
