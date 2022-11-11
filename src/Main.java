@@ -1,3 +1,4 @@
+import manejadores.MyOOS;
 import modelos.Animal;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
@@ -25,6 +26,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        //ACUERDATE QUE LA CLASE IMPLEMENTA SERIALIZABLE
 
         int opcion = 0;
 
@@ -84,8 +86,10 @@ public class Main {
 
         File ficheroAnimalesXML = new File("animales.xml");
 
+        //DOM!!!!
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
+        //document de org!
         Document document = db.parse(ficheroAnimalesXML);
 
         document.getDocumentElement().normalize();
@@ -144,9 +148,10 @@ public class Main {
         }
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer t = tf.newTransformer();
-        DOMSource ds = new DOMSource(document);
 
         t.setOutputProperty(OutputKeys.INDENT, "yes");
+
+        DOMSource ds = new DOMSource(document);
         StreamResult result = new StreamResult(new File("animales.xml"));
         t.transform(ds, result);
     }
@@ -164,6 +169,7 @@ public class Main {
                 }
                 fis = new FileInputStream(fichero);
                 ObjectInputStream ois = new ObjectInputStream(fis);
+                //necesitamos hacer un bucle infinito que lo parará el EOFException
                 while (true) {
                     Animal animal = (Animal) ois.readObject();
                     listaAnimales.add(animal);
@@ -184,17 +190,20 @@ public class Main {
     }
 
     private static void escribirFicheroBinario() {
-        FileOutputStream fos;
+        //EL FILEOUTPUTSTREAM LO HACEMOS DIRECTAMENTE DENTRO DEL OBJETO
+
         try {
             ObjectOutputStream oos;
             if (fichero.exists()) {
                 oos = new MyOOS(new FileOutputStream(fichero, true));
             } else {
-                oos = new ObjectOutputStream(new FileOutputStream(fichero, true));
+                oos = new ObjectOutputStream(new FileOutputStream(fichero));
             }
             for (Animal a : listaAnimales) {
                 oos.writeObject(a);
             }
+
+            oos.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -59,4 +59,5 @@ public class Animal implements Serializable {
                 ", color='" + color + '\'' +
                 '}';
     }
+
 }
